@@ -1,0 +1,82 @@
+:root {
+  --bg: #e8e0ef;
+  --bg-secondary: #ece3f6;
+  --shadow-dark: rgba(176, 163, 196, 0.45);
+  --shadow-light: rgba(252, 250, 255, 0.9);
+  --text-primary: #4a4258;
+  --text-secondary: #8b81a0;
+  --text-muted: #a89fbe;
+  --border: rgba(74, 66, 88, 0.1);
+
+  --rose: #d98a9b;
+  --rose-deep: #a84f63;
+  --sage: #93ad8d;
+  --sage-deep: #55704f;
+  --lavender: #b3a4d6;
+  --lavender-deep: #7c68aa;
+  --gold: #d8ab6c;
+  --gold-deep: #9c6f34;
+  --danger: #d9748a;
+  --danger-deep: #a83f56;
+
+  --accent: var(--lavender);
+  --accent-deep: var(--lavender-deep);
+
+  --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-sans: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #382c31;
+  --bg-secondary: #35292d;
+  --shadow-dark: rgba(26, 19, 22, 0.55);
+  --shadow-light: rgba(76, 60, 66, 0.7);
+  --text-primary: #f1e4e7;
+  --text-secondary: #c9adb2;
+  --text-muted: #957e83;
+  --border: rgba(241, 228, 231, 0.12);
+  --rose: #e6a3b2;
+  --rose-deep: #f7d3da;
+  --sage: #a9c2a3;
+  --sage-deep: #dcead9;
+  --lavender: #c6b8e6;
+  --lavender-deep: #e7dff5;
+  --gold: #e3bd8b;
+  --gold-deep: #f5e2c8;
+  --danger: #e58ba0;
+  --danger-deep: #f5c3cf;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #382c31;
+    --bg-secondary: #35292d;
+    --shadow-dark: rgba(26, 19, 22, 0.55);
+    --shadow-light: rgba(76, 60, 66, 0.7);
+    --text-primary: #f1e4e7;
+    --text-secondary: #c9adb2;
+    --text-muted: #957e83;
+    --border: rgba(241, 228, 231, 0.12);
+    --rose: #e6a3b2;
+    --rose-deep: #f7d3da;
+    --sage: #a9c2a3;
+    --sage-deep: #dcead9;
+    --lavender: #c6b8e6;
+    --lavender-deep: #e7dff5;
+    --gold: #e3bd8b;
+    --gold-deep: #f5e2c8;
+    --danger: #e58ba0;
+    --danger-deep: #f5c3cf;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  transition: background 0.25s ease, color 0.25s ease;
+}

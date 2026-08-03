@@ -1,0 +1,51 @@
+.btn {
+  font-family: var(--font-sans);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background: var(--bg);
+  color: var(--text-primary);
+  box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+  transition: box-shadow 0.25s ease;
+}
+
+.btn:hover {
+  box-shadow: 2px 2px 6px var(--shadow-dark), -2px -2px 6px var(--shadow-light);
+}
+
+.sm {
+  font-size: 13px;
+  padding: 7px 16px;
+  border-radius: var(--radius-sm);
+}
+
+.md {
+  font-size: 14px;
+  padding: 11px 22px;
+  border-radius: var(--radius-md);
+}
+
+.lg {
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: var(--radius-lg);
+}
+
+.primary {
+  color: var(--accent-deep);
+  font-weight: 500;
+}
+
+.ghost {
+  box-shadow: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.ghost:hover {
+  box-shadow: inset 3px 3px 6px var(--shadow-dark), inset -3px -3px 6px var(--shadow-light);
+}
+
+.fullWidth {
+  width: 100%;
+}
