@@ -12,15 +12,15 @@ type Story = StoryObj<typeof Wrapper>;
 export const Default: Story = {
   render: () => (
     <Wrapper>
-      <div style={{ padding: 20 }}>Базовая поверхность на --bg-secondary</div>
+      <div style={{ padding: 20 }}>Приподнятая поверхность (shadowOut по умолчанию)</div>
     </Wrapper>
   ),
 };
 
-export const LightShadow: Story = {
+export const ShadowIn: Story = {
   render: () => (
-    <Wrapper lightShadow>
-      <div style={{ padding: 20 }}>Более тонкая тень</div>
+    <Wrapper shadowOut={false}>
+      <div style={{ padding: 20 }}>Внутренняя тень, как в dropzone у FileInput</div>
     </Wrapper>
   ),
 };

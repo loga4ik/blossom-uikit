@@ -1,12 +1,15 @@
-import { useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import { Button } from "./components/Button/Button";
 import { FavoriteButton } from "./components/IconButton/FavoriteButton";
 import { SizeSelector } from "./components/SizeSelector/SizeSelector";
 import { SearchField } from "./components/SearchField/SearchField";
 import { TextInput } from "./components/TextInput/TextInput";
+import { DropDown, type DropDownOption } from "./components/DropDown/DropDown";
+import { Autocomplete } from "./components/Autocomplete/Autocomplete";
 import { FileInput } from "./components/FileInput/FileInput";
 import { Wrapper } from "./components/Wrapper/Wrapper";
-import { ProductCard } from "./components/ProductCard/ProductCard";
+import { LookCard } from "./components/LookCard/LookCard";
+import { ItemCard } from "./components/ItemCard/ItemCard";
 import { ThemeToggle } from "./components/ThemeToggle/ThemeToggle";
 import { Modal } from "./components/Modal/Modal";
 import { DressIllustration } from "./components/icons/DressIllustration";
@@ -27,8 +30,46 @@ const eyebrowStyle: CSSProperties = {
   fontWeight: 500,
 };
 
+const wardrobeCatalog = [
+  "Джинсы прямые",
+  "Джинсы скинни",
+  "Джинсовая куртка",
+  "Платье миди «Ирис»",
+  "Блуза шёлковая",
+  "Блуза «Роза»",
+  "Кроссовки белые",
+];
+
+const fakeDbSearch = (query: string): Promise<DropDownOption[]> =>
+  new Promise((resolve) => {
+    setTimeout(() => {
+      const matches = wardrobeCatalog
+        .filter((name) => name.toLowerCase().includes(query.toLowerCase()))
+        .map((name) => ({ value: name, label: name }));
+      resolve(matches);
+    }, 400);
+  });
+
 function App() {
   const [quickViewOpen, setQuickViewOpen] = useState(false);
+  const [wardrobeOptions, setWardrobeOptions] = useState<DropDownOption[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const searchRequestId = useRef(0);
+
+  const handleWardrobeSearch = async (query: string) => {
+    if (!query) {
+      setWardrobeOptions([]);
+      setIsSearching(false);
+      return;
+    }
+    const requestId = ++searchRequestId.current;
+    setIsSearching(true);
+    const results = await fakeDbSearch(query);
+    if (requestId === searchRequestId.current) {
+      setWardrobeOptions(results);
+      setIsSearching(false);
+    }
+  };
 
   return (
     <div style={{ maxWidth: 760, margin: "0 auto", padding: "2.5rem 1.5rem 4rem" }}>
@@ -83,6 +124,31 @@ function App() {
       </section>
 
       <section style={{ marginBottom: "3rem" }}>
+        <p style={eyebrowStyle}>Выпадающий список</p>
+        <DropDown
+          label="Категория"
+          placeholder="Выберите категорию"
+          options={[
+            { value: "top", label: "Верх" },
+            { value: "bottom", label: "Низ" },
+            { value: "shoes", label: "Обувь" },
+            { value: "accessory", label: "Аксессуар" },
+          ]}
+        />
+      </section>
+
+      <section style={{ marginBottom: "3rem" }}>
+        <p style={eyebrowStyle}>Автокомплит (поиск по БД)</p>
+        <Autocomplete
+          label="Вещь"
+          placeholder="Начните вводить название…"
+          options={wardrobeOptions}
+          isLoading={isSearching}
+          onChange={handleWardrobeSearch}
+        />
+      </section>
+
+      <section style={{ marginBottom: "3rem" }}>
         <p style={eyebrowStyle}>Загрузка файла</p>
         <FileInput label="Фото товара" hint="PNG или JPG, до 10 МБ" />
       </section>
@@ -98,19 +164,16 @@ function App() {
       </section>
 
       <section style={{ marginBottom: "3rem" }}>
-        <p style={eyebrowStyle}>Карточка товара</p>
-        <ProductCard
-          title="Платье миди «Ирис»"
-          fabric="Лён, свободный крой"
-          price={4890}
-          sizes={["XS", "S", "M"]}
-          defaultSize="S"
-          colors={[
-            { name: "Лавандовый", value: "var(--lavender)", deep: "var(--lavender-deep)" },
-            { name: "Розовый", value: "var(--rose)", deep: "var(--rose-deep)" },
-            { name: "Золотой", value: "var(--gold)", deep: "var(--gold-deep)" },
-          ]}
-        />
+        <p style={eyebrowStyle}>Карточка образа</p>
+        <LookCard title="Платье миди «Ирис»" description="Лён, свободный крой" />
+      </section>
+
+      <section style={{ marginBottom: "3rem" }}>
+        <p style={eyebrowStyle}>Карточка вещи</p>
+        <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+          <ItemCard title="Джинсы прямые" category="Низ" meta="3 нед." />
+          <ItemCard title="Блуза шёлковая" category="Верх" meta="1 нед." defaultFavorite />
+        </div>
       </section>
 
       <section>

@@ -5,7 +5,7 @@ type Props = {
   className?: string;
   children: ReactNode;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  lightShadow?: boolean;
+  shadowOut?: boolean;
   shadow?: boolean;
 };
 
@@ -13,12 +13,12 @@ export const Wrapper = ({
   children,
   className,
   onClick,
-  lightShadow = false,
+  shadowOut = true,
   shadow = true,
 }: Props) => {
   const classes = [
     styles.wrapper,
-    shadow && lightShadow && styles.lightShadow,
+    shadow && !shadowOut && styles.shadowIn,
     !shadow && styles.noShadow,
     className,
   ]
